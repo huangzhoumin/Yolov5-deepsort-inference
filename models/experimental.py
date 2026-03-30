@@ -135,9 +135,9 @@ def attempt_load(weights, map_location=None):
     for w in weights if isinstance(weights, list) else [weights]:
         attempt_download(w)
         try:
-            model.append(torch.load(w, map_location=map_location)['model'].float().fuse().eval())  # load FP32 model
+            model.append(torch.load(w, map_location=map_location, weights_only=False)['model'].float().fuse().eval())  # load FP32 model
         except Exception:
-            model.append(torch.load(w, map_location=map_location).float().fuse().eval())  # load FP32 model
+            model.append(torch.load(w, map_location=map_location, weights_only=False).float().fuse().eval())  # load FP32 model
 
     # Compatibility updates
     for m in model.modules():
